@@ -5,7 +5,16 @@ class IntroPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(
-        children: [],
+        children: [
+          RichText(
+            text: TextSpan(
+              text: 'Space',
+              children: [
+                TextSpan(text: 'Element'),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }
