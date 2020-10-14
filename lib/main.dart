@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_examples/src/space_concept/space_concept.dart';
+import 'package:flutter_examples/src/widgets_examples/widgets_examples.dart';
 
 void main() {
-  runApp(SpaceConcept());
+  runApp(WidgetsExamples());
 }
 
 class MyApp extends StatelessWidget {
