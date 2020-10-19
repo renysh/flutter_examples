@@ -152,10 +152,10 @@ class AllStationsPage extends StatelessWidget {
                   ],
                 ),
               ),
-              AvatarWidget(
-                side: 150,
-              ),
             ],
+          ),
+          AvatarWidget(
+            side: 350,
           ),
         ],
       ),
@@ -184,6 +184,7 @@ class AvatarWidget extends StatelessWidget {
 class AvatarPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
+    final double radius = 30;
     print(size);
     Paint paint = Paint();
     paint.style = PaintingStyle.fill;
@@ -191,11 +192,27 @@ class AvatarPainter extends CustomPainter {
 
     Path path = Path();
     path.moveTo(0, 0);
-    path.lineTo(size.width, size.height /2);
+    Offset p1 = Offset(size.width - 2 * radius, size.height / 2 - radius);
+    Offset p2 = Offset(size.width - 2 * radius, size.height / 2 + radius);
+    path.lineTo(p1.dx, p1.dy);
+    // path.arcToPoint(p2, radius: Radius.circular(radius));
+    path.quadraticBezierTo(size.width, size.height/2, p2.dx, p2.dy);
+
     path.lineTo(0, size.height);
+
     path.close();
 
     canvas.drawPath(path, paint);
+
+    /*Paint paint2 = Paint();
+    paint2.style = PaintingStyle.stroke;
+    paint2.color = Colors.yellow;
+
+    Path path2 = Path();
+    path2.moveTo(size.width - (math.sqrt(3) - radius), size.height);
+
+    canvas.drawCircle(
+        Offset(size.width - 2 * radius - 6, size.height / 2), radius, paint2);*/
   }
 
   @override
