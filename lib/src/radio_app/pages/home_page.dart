@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
+import 'dart:ui' as ui;
 
 class HomePage extends StatefulWidget {
   @override
@@ -129,38 +130,173 @@ class AllStationsPage extends StatelessWidget {
     final size = MediaQuery.of(context).size;
     return Container(
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           SizedBox(
             height: size.height * 0.06,
           ),
-          Row(
-            children: [
-              RichText(
-                text: TextSpan(
-                  text: 'Hello ',
+          Padding(
+            padding: const EdgeInsets.only(left: 25.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                RichText(
+                  text: TextSpan(
+                    text: 'Hello ',
+                    style: TextStyle(
+                      fontSize: 30,
+                      fontWeight: FontWeight.w500,
+                    ),
+                    children: [
+                      TextSpan(
+                        text: 'Miau',
+                        style: TextStyle(
+                          color: Color(0XFFFF296D),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                AvatarWidget(
+                  side: 150,
+                ),
+              ],
+            ),
+          ),
+          SizedBox(
+            height: 20.0,
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 25.0),
+            child: Text(
+              'All Stations',
+              style: TextStyle(
+                fontSize: 30.0,
+                fontWeight: FontWeight.w300,
+              ),
+            ),
+          ),
+          SizedBox(
+            height: 15.0,
+          ),
+          Align(
+            child: CardStation(),
+          )
+        ],
+      ),
+    );
+  }
+}
+
+class CardStation extends StatelessWidget {
+  const CardStation({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 139,
+      width: 139,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(
+          15,
+        ),
+        color: Color(0XFFFF296D),
+      ),
+      child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 10),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Playing',
+                  style: TextStyle(
+                    color: Color(0XFFAA1E4A),
+                    fontSize: 10,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                Icon(
+                  Icons.favorite,
+                  color: Colors.white,
+                ),
+              ],
+            ),
+          ),
+          Expanded(
+            child: Column(
+              children: [
+                Text(
+                  '90.5',
                   style: TextStyle(
                     fontSize: 30,
-                    fontWeight: FontWeight.w500,
+                    fontWeight: FontWeight.w700,
                   ),
-                  children: [
-                    TextSpan(
-                      text: 'Miau',
-                      style: TextStyle(
-                        color: Color(0XFFFF296D),
+                ),
+                Text(
+                  'Divelement',
+                  style: TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
+                SizedBox(
+                  height: 5.0,
+                ),
+                Align(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                    child: CustomPaint(
+                      painter: EqualizePainter(),
+                      child: Container(
+                        // color: Colors.blue,
+                        height: 25,
                       ),
                     ),
-                  ],
+                  ),
                 ),
-              ),
-            ],
-          ),
-          AvatarWidget(
-            side: 350,
+              ],
+            ),
           ),
         ],
       ),
     );
   }
+}
+
+class EqualizePainter extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    final initialPoint = Offset(0, size.height * 0.2);
+    final endPoint = Offset(size.width, size.height * 0.2);
+
+    Paint paintLine = Paint()
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 4
+      ..color = Colors.white
+      ..strokeJoin = StrokeJoin.round;
+
+    Path path = Path();
+    path.moveTo(initialPoint.dx, initialPoint.dy);
+    path.relativeCubicTo(size.width * 0.0625, size.height + 10,
+        size.width * 0.1875, -20, size.width * 0.25, size.height * 0.5);
+    path.close();
+    
+
+    Paint paintCircle = Paint();
+    paintCircle.color = Color(0XFFB02854);
+
+    canvas.drawPath(path, paintLine);
+
+    canvas.drawCircle(initialPoint, 5, paintCircle);
+    canvas.drawCircle(endPoint, 5, paintCircle);
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) => true;
 }
 
 class AvatarWidget extends StatelessWidget {
@@ -170,18 +306,50 @@ class AvatarWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CustomPaint(
-      painter: AvatarPainter(),
-      child: Container(
-        height: side,
-        width: (math.sqrt(3) * side / 2),
-        // child: Image.asset('assets/images/radio_app/profile_picture.png'),
+    return Container(
+      // height: side,
+      // width: (math.sqrt(3) / 2) * side,
+      child: ClipPath(
+        clipper: AvatarClipper(),
+        child: Image.asset(
+          'assets/images/radio_app/profile_picture.png',
+          width: 100,
+        ),
       ),
     );
   }
 }
 
+class AvatarClipper extends CustomClipper<Path> {
+  @override
+  Path getClip(Size size) {
+    final double radius = 30;
+    final path = Path();
+    path.moveTo(0, size.height * 0.25);
+    Offset p1 = Offset(size.width - 2 * radius, size.height / 2 - radius);
+    Offset p2 = Offset(size.width - 2 * radius, size.height / 2 + radius);
+    path.quadraticBezierTo(0, 0, size.width * 0.25, size.height * 0.15);
+    path.lineTo(p1.dx, p1.dy);
+    // path.arcToPoint(p2, radius: Radius.circular(radius));
+    path.quadraticBezierTo(size.width, size.height / 2, p2.dx, p2.dy);
+
+    path.lineTo(size.width * 0.25, size.height * 0.85);
+
+    path.quadraticBezierTo(0, size.height, 0, size.height * 0.75);
+
+    path.close();
+    return path;
+  }
+
+  @override
+  bool shouldReclip(covariant CustomClipper<Path> oldClipper) => true;
+}
+
 class AvatarPainter extends CustomPainter {
+  final ui.Image image;
+
+  AvatarPainter(this.image);
+
   @override
   void paint(Canvas canvas, Size size) {
     final double radius = 30;
@@ -191,16 +359,21 @@ class AvatarPainter extends CustomPainter {
     paint.color = Colors.pink;
 
     Path path = Path();
-    path.moveTo(0, 0);
+    path.moveTo(0, size.height * 0.25);
     Offset p1 = Offset(size.width - 2 * radius, size.height / 2 - radius);
     Offset p2 = Offset(size.width - 2 * radius, size.height / 2 + radius);
+    path.quadraticBezierTo(0, 0, size.width * 0.25, size.height * 0.15);
     path.lineTo(p1.dx, p1.dy);
     // path.arcToPoint(p2, radius: Radius.circular(radius));
-    path.quadraticBezierTo(size.width, size.height/2, p2.dx, p2.dy);
+    path.quadraticBezierTo(size.width, size.height / 2, p2.dx, p2.dy);
 
-    path.lineTo(0, size.height);
+    path.lineTo(size.width * 0.25, size.height * 0.85);
+
+    path.quadraticBezierTo(0, size.height, 0, size.height * 0.75);
 
     path.close();
+
+    canvas.drawImage(image, Offset(0, 0), paint);
 
     canvas.drawPath(path, paint);
 
