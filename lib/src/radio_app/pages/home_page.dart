@@ -196,8 +196,8 @@ class CardStation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 139,
-      width: 139,
+      height: 300,
+      width: 300,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(
           15,
@@ -250,10 +250,10 @@ class CardStation extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20.0),
                     child: CustomPaint(
-                      painter: EqualizePainter(),
+                      foregroundPainter: EqualizePainter(),
                       child: Container(
-                        // color: Colors.blue,
-                        height: 25,
+                        color: Colors.blue,
+                        height: 80,
                       ),
                     ),
                   ),
@@ -270,21 +270,52 @@ class CardStation extends StatelessWidget {
 class EqualizePainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
-    final initialPoint = Offset(0, size.height * 0.2);
-    final endPoint = Offset(size.width, size.height * 0.2);
+    final initialPoint = Offset(0, size.height * 0.33);
+    final endPoint = Offset(size.width, size.height * 0.33);
 
     Paint paintLine = Paint()
       ..style = PaintingStyle.stroke
-      ..strokeWidth = 4
+      ..strokeWidth = 5
       ..color = Colors.white
       ..strokeJoin = StrokeJoin.round;
 
     Path path = Path();
     path.moveTo(initialPoint.dx, initialPoint.dy);
-    path.relativeCubicTo(size.width * 0.0625, size.height + 10,
-        size.width * 0.1875, -20, size.width * 0.25, size.height * 0.5);
-    path.close();
-    
+    path.cubicTo(
+      size.width * 0.06,
+      size.height * 0.25,
+      size.width * 0.1,
+      size.height * 1.1,
+      size.width * 0.1829,
+      size.height * 0.5,
+    );
+
+    path.cubicTo(
+      size.width * 0.32,
+      -size.height * 0.8,
+      size.width * 0.3,
+      size.height * 1.3,
+      size.width * 0.4371,
+      size.height * 0.5,
+    );
+
+    path.cubicTo(
+      size.width * 0.55,
+      -size.height * 0.1,
+      size.width * 0.55,
+      size.height * 1.7,
+      size.width * 0.6857,
+      size.height * 0.5,
+    );
+
+    path.cubicTo(
+      size.width * 0.75,
+      -size.height * 0.1,
+      size.width * 0.85,
+      size.height * 1.3,
+      size.width * 0.9143,
+      size.height * 0.5,
+    );
 
     Paint paintCircle = Paint();
     paintCircle.color = Color(0XFFB02854);
