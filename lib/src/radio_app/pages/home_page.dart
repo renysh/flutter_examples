@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'dart:math' as math;
 import 'dart:ui' as ui;
+import 'package:provider/provider.dart';
+
+import 'package:flutter_examples/src/radio_app/bloc/station_provider.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -9,6 +11,13 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
+
+  @override
+  void initState() {
+    Provider.of<StationProvider>(context, listen: false).loadStations();
+    super.initState();
+    
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -196,8 +205,8 @@ class CardStation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 300,
-      width: 300,
+      height: 150,
+      width: 150,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(
           15,
@@ -207,7 +216,8 @@ class CardStation extends StatelessWidget {
       child: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 10),
+            padding: const EdgeInsets.only(
+                left: 15.0, top: 10, right: 15.0, bottom: 5.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -244,7 +254,7 @@ class CardStation extends StatelessWidget {
                   ),
                 ),
                 SizedBox(
-                  height: 5.0,
+                  height: 10.0,
                 ),
                 Align(
                   child: Padding(
@@ -252,8 +262,7 @@ class CardStation extends StatelessWidget {
                     child: CustomPaint(
                       foregroundPainter: EqualizePainter(),
                       child: Container(
-                        color: Colors.blue,
-                        height: 80,
+                        height: 25,
                       ),
                     ),
                   ),
@@ -275,7 +284,7 @@ class EqualizePainter extends CustomPainter {
 
     Paint paintLine = Paint()
       ..style = PaintingStyle.stroke
-      ..strokeWidth = 5
+      ..strokeWidth = 3
       ..color = Colors.white
       ..strokeJoin = StrokeJoin.round;
 
@@ -309,12 +318,19 @@ class EqualizePainter extends CustomPainter {
     );
 
     path.cubicTo(
-      size.width * 0.75,
+      size.width * 0.8,
       -size.height * 0.1,
-      size.width * 0.85,
+      size.width * 0.8,
       size.height * 1.3,
       size.width * 0.9143,
       size.height * 0.5,
+    );
+
+    path.quadraticBezierTo(
+      size.width * 0.94,
+      size.height * 0.35,
+      endPoint.dx,
+      endPoint.dy,
     );
 
     Paint paintCircle = Paint();
