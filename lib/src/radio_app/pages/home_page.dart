@@ -16,7 +16,6 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     Provider.of<StationProvider>(context, listen: false).loadStations();
     super.initState();
-    
   }
 
   @override
@@ -188,9 +187,17 @@ class AllStationsPage extends StatelessWidget {
           SizedBox(
             height: 15.0,
           ),
-          Align(
-            child: CardStation(),
-          )
+          Expanded(
+            child: GridView.count(
+              crossAxisCount: 2,
+              crossAxisSpacing: 10.0,
+              mainAxisSpacing: 10.0,
+              children: Provider.of<StationProvider>(context)
+                  .stations
+                  .map((e) => CardStation())
+                  .toList(),
+            ),
+          ),
         ],
       ),
     );
