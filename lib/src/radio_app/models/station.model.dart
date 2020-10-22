@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 class Station {
+  final int id;
   final String name;
   final String frecuence;
-  final bool selected;
   final Color pointsColor;
 
-  Station({this.name, this.frecuence, this.selected, this.pointsColor});
+  Station({this.id, this.name, this.frecuence, this.pointsColor});
 }
