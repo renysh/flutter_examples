@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_examples/src/radio_app/models/station.model.dart';
 import 'dart:ui' as ui;
 import 'package:provider/provider.dart';
 
@@ -188,14 +189,19 @@ class AllStationsPage extends StatelessWidget {
             height: 15.0,
           ),
           Expanded(
-            child: GridView.count(
-              crossAxisCount: 2,
-              crossAxisSpacing: 10.0,
-              mainAxisSpacing: 10.0,
-              children: Provider.of<StationProvider>(context)
-                  .stations
-                  .map((e) => CardStation())
-                  .toList(),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 25),
+              child: GridView.count(
+                crossAxisCount: 2,
+                crossAxisSpacing: 15.0,
+                mainAxisSpacing: 15.0,
+                children: Provider.of<StationProvider>(context)
+                    .stations
+                    .map((e) => CardStation(
+                          station: e,
+                        ))
+                    .toList(),
+              ),
             ),
           ),
         ],
@@ -205,20 +211,22 @@ class AllStationsPage extends StatelessWidget {
 }
 
 class CardStation extends StatelessWidget {
-  const CardStation({
-    Key key,
-  }) : super(key: key);
+  final Station station;
+  const CardStation({@required this.station});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 150,
-      width: 150,
+      // height: 150,
+      // width: 150,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(
           15,
         ),
-        color: Color(0XFFFF296D),
+        color: station.selected ? Color(0XFFFF296D) : Colors.transparent,
+        border: station.selected
+            ? Border.all(color: Colors.transparent)
+            : Border.all(color: Color(0XFF32324E), width: 2),
       ),
       child: Column(
         children: [
@@ -229,17 +237,22 @@ class CardStation extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'Playing',
+                  station.selected ? 'Playing' : '',
                   style: TextStyle(
                     color: Color(0XFFAA1E4A),
                     fontSize: 10,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
-                Icon(
-                  Icons.favorite,
-                  color: Colors.white,
-                ),
+                station.selected
+                    ? Icon(
+                        Icons.favorite,
+                        color: Colors.white,
+                      )
+                    : Icon(
+                        Icons.favorite_border,
+                        color: Colors.white,
+                      ),
               ],
             ),
           ),
@@ -247,27 +260,36 @@ class CardStation extends StatelessWidget {
             child: Column(
               children: [
                 Text(
-                  '90.5',
+                  station.frecuence,
                   style: TextStyle(
                     fontSize: 30,
                     fontWeight: FontWeight.w700,
+                    color: station.selected
+                        ? Colors.white
+                        : Color(0XFFFFFFFF).withOpacity(0.2),
                   ),
                 ),
                 Text(
-                  'Divelement',
+                  station.name,
                   style: TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.w400,
+                    color: station.selected
+                        ? Colors.white
+                        : Color(0XFFFFFFFF).withOpacity(0.2),
                   ),
                 ),
                 SizedBox(
-                  height: 10.0,
+                  height: 5.0,
                 ),
                 Align(
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20.0),
                     child: CustomPaint(
-                      foregroundPainter: EqualizePainter(),
+                      foregroundPainter: EqualizePainter(
+                        station.selected,
+                        station.pointsColor,
+                      ),
                       child: Container(
                         height: 25,
                       ),
@@ -284,6 +306,10 @@ class CardStation extends StatelessWidget {
 }
 
 class EqualizePainter extends CustomPainter {
+  final bool selected;
+  final Color pointsColor;
+
+  EqualizePainter(this.selected, this.pointsColor);
   @override
   void paint(Canvas canvas, Size size) {
     final initialPoint = Offset(0, size.height * 0.33);
@@ -292,7 +318,7 @@ class EqualizePainter extends CustomPainter {
     Paint paintLine = Paint()
       ..style = PaintingStyle.stroke
       ..strokeWidth = 3
-      ..color = Colors.white
+      ..color = selected ? Colors.white : Color(0XFFFFFFFF).withOpacity(0.3)
       ..strokeJoin = StrokeJoin.round;
 
     Path path = Path();
@@ -341,7 +367,7 @@ class EqualizePainter extends CustomPainter {
     );
 
     Paint paintCircle = Paint();
-    paintCircle.color = Color(0XFFB02854);
+    paintCircle.color = pointsColor;
 
     canvas.drawPath(path, paintLine);
 
