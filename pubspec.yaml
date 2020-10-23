@@ -43,6 +43,7 @@ flutter:
   assets:
     - assets/images/space_concept/
     - assets/images/radio_app/
+    - assets/images/workout_app/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
@@ -73,6 +74,19 @@ flutter:
         - asset: assets/fonts/SF-Pro-Display-Thin.ttf
         - asset: assets/fonts/SF-Pro-Display-Ultralight-Italic.ttf
         - asset: assets/fonts/SF-Pro-Display-Ultralight.ttf
+    - family: Aeonik
+      fonts:
+        - asset: assets/fonts/Aeonik-Medium.otf
+        - asset: assets/fonts/Aeonik-Regular.otf
+    - family: EuclidCircularA
+      fonts:
+        - asset: assets/fonts/EuclidCircularA-Bold.ttf
+        - asset: assets/fonts/EuclidCircularA-Regular.ttf
+    - family: BebasNeue
+      fonts:
+        - asset: assets/fonts/BebasNeue-Regular.ttf
+        
+        
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
   #   - family: Trajan Pro
