@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_examples/src/workout_app/theme.dart';
+import 'package:flutter_examples/src/workout_app/view/pages/login_page.dart';
+import 'package:flutter_examples/src/workout_app/view/widgets/title_widget.dart';
 
 class WelcomePage extends StatelessWidget {
   @override
@@ -39,26 +41,7 @@ class WelcomePage extends StatelessWidget {
                   SizedBox(
                     height: size.height * 0.1,
                   ),
-                  RichText(
-                    textAlign: TextAlign.center,
-                    text: TextSpan(
-                      text: 'HARD ',
-                      style: TextStyle(
-                        fontFamily: 'BebasNeue',
-                        fontSize: 32,
-                        color: AppColors.white,
-                        fontWeight: FontWeight.w400,
-                      ),
-                      children: [
-                        TextSpan(
-                          text: 'ELEMENT',
-                          style: TextStyle(
-                            color: AppColors.green,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
+                  TitleWidget(),
                   SizedBox(
                     height: size.height * 0.25,
                   ),
@@ -108,8 +91,7 @@ class WelcomePage extends StatelessWidget {
                   SizedBox(
                     height: 15.0,
                   ),
-                  RaisedButton(
-                    color: Colors.transparent,
+                  FlatButton(
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(30),
                         side: BorderSide(
@@ -128,11 +110,14 @@ class WelcomePage extends StatelessWidget {
                         ),
                       ),
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (BuildContext context) => LoginPage()));
+                    },
                   ),
                   Spacer(),
                   Text(
-                    'Change lenguage',
+                    'Change language',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontFamily: 'Aeonik',
