@@ -13,6 +13,10 @@ class WorkoutProvider with ChangeNotifier {
 
   List<TrainingState> get states => _states;
 
+  int _categorySeletedId = 0;
+
+  int get categorySeletedId => _categorySeletedId;
+
   Future<void> loadStates() async {
     this._states = await this._api.getTrainingStates();
     this._selectedState = this._states[0];
@@ -21,6 +25,11 @@ class WorkoutProvider with ChangeNotifier {
 
   void selectState(TrainingState state) {
     this._selectedState = state;
+    notifyListeners();
+  }
+
+  void selectCategoryOption(int id){
+    this._categorySeletedId = id;
     notifyListeners();
   }
 }
