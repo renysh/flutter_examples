@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_examples/src/workout_app/theme.dart';
+import 'package:flutter_examples/src/workout_app/view/pages/details_train_page.dart';
 import 'package:flutter_examples/src/workout_app/view/widgets/category_training_option.dart';
 
 class HomeTrainingPage extends StatefulWidget {
@@ -212,6 +213,129 @@ class _HomeTrainingPageState extends State<HomeTrainingPage> {
                                     fontWeight: FontWeight.w700,
                                   ),
                                 ),
+                                Container(
+                                  padding: EdgeInsets.only(top: 10),
+                                  height: 215,
+                                  child: ListView(
+                                    scrollDirection: Axis.horizontal,
+                                    children: [
+                                      ExerciseCard(
+                                        pathImage:
+                                            'assets/images/workout_app/emily-sea-coiWR0gT8Cw-unsplash.png',
+                                        title: 'Yoga exercises',
+                                      ),
+                                      ExerciseCard(
+                                        pathImage:
+                                            'assets/images/workout_app/makaroglu-YFmvjO3TP_s-unsplas.png',
+                                        title: 'Example exercises',
+                                      ),
+                                      ExerciseCard(
+                                        pathImage:
+                                            'assets/images/workout_app/jawfox-Kl2t5U6Gkm0-unsplash.png',
+                                        title: 'Example exercises',
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Text(
+                                  'Hard Workout',
+                                  style: TextStyle(
+                                    color: AppColors.white,
+                                    fontFamily: 'Aeonik',
+                                    fontSize: 30,
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                ),
+                                Container(
+                                  padding: EdgeInsets.only(top: 10),
+                                  height: 215,
+                                  child: ListView(
+                                    scrollDirection: Axis.horizontal,
+                                    children: [
+                                      ExerciseCard(
+                                        pathImage:
+                                            'assets/images/workout_app/emily-sea-coiWR0gT8Cw-unsplash.png',
+                                        title: 'Yoga exercises',
+                                      ),
+                                      ExerciseCard(
+                                        pathImage:
+                                            'assets/images/workout_app/makaroglu-YFmvjO3TP_s-unsplas.png',
+                                        title: 'Example exercises',
+                                      ),
+                                      ExerciseCard(
+                                        pathImage:
+                                            'assets/images/workout_app/jawfox-Kl2t5U6Gkm0-unsplash.png',
+                                        title: 'Example exercises',
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Text(
+                                  'Full Body',
+                                  style: TextStyle(
+                                    color: AppColors.white,
+                                    fontFamily: 'Aeonik',
+                                    fontSize: 30,
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                ),
+                                Container(
+                                  padding: EdgeInsets.only(top: 10),
+                                  height: 215,
+                                  child: ListView(
+                                    scrollDirection: Axis.horizontal,
+                                    children: [
+                                      ExerciseCard(
+                                        pathImage:
+                                            'assets/images/workout_app/emily-sea-coiWR0gT8Cw-unsplash.png',
+                                        title: 'Yoga exercises',
+                                      ),
+                                      ExerciseCard(
+                                        pathImage:
+                                            'assets/images/workout_app/makaroglu-YFmvjO3TP_s-unsplas.png',
+                                        title: 'Example exercises',
+                                      ),
+                                      ExerciseCard(
+                                        pathImage:
+                                            'assets/images/workout_app/jawfox-Kl2t5U6Gkm0-unsplash.png',
+                                        title: 'Example exercises',
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Text(
+                                  'Crossfit',
+                                  style: TextStyle(
+                                    color: AppColors.white,
+                                    fontFamily: 'Aeonik',
+                                    fontSize: 30,
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                ),
+                                Container(
+                                  padding: EdgeInsets.only(top: 10),
+                                  height: 215,
+                                  child: ListView(
+                                    scrollDirection: Axis.horizontal,
+                                    children: [
+                                      ExerciseCard(
+                                        pathImage:
+                                            'assets/images/workout_app/emily-sea-coiWR0gT8Cw-unsplash.png',
+                                        title: 'Yoga exercises',
+                                      ),
+                                      ExerciseCard(
+                                        pathImage:
+                                            'assets/images/workout_app/makaroglu-YFmvjO3TP_s-unsplas.png',
+                                        title: 'Example exercises',
+                                      ),
+                                      ExerciseCard(
+                                        pathImage:
+                                            'assets/images/workout_app/jawfox-Kl2t5U6Gkm0-unsplash.png',
+                                        title: 'Example exercises',
+                                      ),
+                                    ],
+                                  ),
+                                ),
                               ],
                             ),
                           ),
@@ -260,6 +384,43 @@ class _HomeTrainingPageState extends State<HomeTrainingPage> {
               ],
             ),
           ),
+        ),
+      ),
+    );
+  }
+}
+
+class ExerciseCard extends StatelessWidget {
+  final String title;
+  final String pathImage;
+
+  const ExerciseCard({@required this.title, @required this.pathImage});
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => DetailsTrainPage(),
+          ),
+        );
+      },
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          children: [
+            Image.asset(pathImage),
+            Text(
+              title,
+              style: TextStyle(
+                fontFamily: 'Aeonik',
+                fontSize: 12,
+                fontWeight: FontWeight.w400,
+                color: AppColors.white,
+              ),
+            ),
+          ],
         ),
       ),
     );

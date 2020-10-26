@@ -17,6 +17,10 @@ class WorkoutProvider with ChangeNotifier {
 
   int get categorySeletedId => _categorySeletedId;
 
+  int _detailSectionSelectionIndex = 0;
+
+  int get detailSectionSelectionIndex => _detailSectionSelectionIndex;
+
   Future<void> loadStates() async {
     this._states = await this._api.getTrainingStates();
     this._selectedState = this._states[0];
@@ -28,8 +32,13 @@ class WorkoutProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void selectCategoryOption(int id){
+  void selectCategoryOption(int id) {
     this._categorySeletedId = id;
+    notifyListeners();
+  }
+
+  selectSectionDetails(int index) {
+    this._detailSectionSelectionIndex = index;
     notifyListeners();
   }
 }
