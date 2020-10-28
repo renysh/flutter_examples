@@ -16,3 +16,4 @@ For help getting started with Flutter, view our
 samples, guidance on mobile development, and a full API reference.
 # flutter_examples
 https://medium.com/flutterdevs/music-player-using-flutter-a803c939c967
+https://github.com/flutter-devs/music_app_demo
