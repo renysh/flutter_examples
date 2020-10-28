@@ -1,6 +1,11 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
+import 'package:audio_manager/audio_manager.dart';
+
+var audioManagerInstance = AudioManager.instance;
+bool showVol = false;
+PlayMode playMode = audioManagerInstance.playMode;
+bool isPlaying = false;
+double _slider;
 
 class VinylPage extends StatefulWidget {
   @override
@@ -16,6 +21,37 @@ class _VinylPageState extends State<VinylPage>
     animationController =
         AnimationController(duration: const Duration(seconds: 2), vsync: this);
     super.initState();
+  }
+
+  void setupAudio() {
+    audioManagerInstance.onEvents((events, args) {
+      switch (events) {
+        case AudioManagerEvents.start:
+          _slider = 0;
+          break;
+        case AudioManagerEvents.seekComplete:
+          _slider = audioManagerInstance.position.inMilliseconds /
+              audioManagerInstance.duration.inMilliseconds;
+          setState(() {});
+          break;
+        case AudioManagerEvents.playstatus:
+          isPlaying = audioManagerInstance.isPlaying;
+          setState(() {});
+          break;
+        case AudioManagerEvents.timeupdate:
+          _slider = audioManagerInstance.position.inMilliseconds /
+              audioManagerInstance.duration.inMilliseconds;
+          audioManagerInstance.updateLrc(args["position"].toString());
+          setState(() {});
+          break;
+        case AudioManagerEvents.ended:
+          audioManagerInstance.next();
+          setState(() {});
+          break;
+        default:
+          break;
+      }
+    });
   }
 
   @override
