@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'dart:math';
 
 class NavigationTransitions extends StatelessWidget {
   @override
@@ -36,17 +37,41 @@ class Page1 extends StatelessWidget {
 
 Route _createRoute() {
   return PageRouteBuilder(
+    transitionDuration: const Duration(seconds: 1),
     pageBuilder: (context, animation, secondaryAnimation) => Page2(),
     transitionsBuilder: (context, animation, secondaryAnimation, child) {
-      var begin = Offset(0.0, 1.0);
-      var end = Offset.zero;
-      var curve = Curves.ease;
-
-      var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
-
-      return SlideTransition(
-        position: animation.drive(tween),
-        child: child,
+      return Container(
+        color: Colors.black,
+        child: Stack(
+          children: <Widget>[
+            SlideTransition(
+              position: Tween<Offset>(
+                begin: Offset.zero,
+                end: Offset(-1.0, 0.0),
+              ).animate(animation),
+              child: Transform(
+                transform: Matrix4.identity()
+                  ..setEntry(3, 2, 0.003)
+                  ..rotateY(pi / 2 * animation.value),
+                alignment: FractionalOffset.centerRight,
+                child: Page1(),
+              ),
+            ),
+            SlideTransition(
+              position: Tween<Offset>(
+                begin: Offset(1.0, 0.0),
+                end: Offset.zero,
+              ).animate(animation),
+              child: Transform(
+                transform: Matrix4.identity()
+                  ..setEntry(3, 2, 0.003)
+                  ..rotateY(pi / 2 * (animation.value - 1)),
+                alignment: FractionalOffset.centerLeft,
+                child: Page2(),
+              ),
+            )
+          ],
+        ),
       );
     },
   );
