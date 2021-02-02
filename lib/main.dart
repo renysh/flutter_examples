@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_examples/src/food_recipes/food_recipes.dart';
+import 'package:flutter_examples/src/menu_side_animation/menu_side_animation.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -8,6 +8,6 @@ void main() {
     statusBarColor: Colors.transparent, // transparent status bar
   ));
   runApp(
-    FoodRecipes(),
+    MenuSideAnimation(),
   );
 }
